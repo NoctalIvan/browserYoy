@@ -8,11 +8,12 @@ board.tiles = [[1,1,2],[2,2,1],[1,1,1]].map((l,y) => l.map((i,x) => new HexTile(
 
 describe('HexBoard', () => {
     it('getRegion', () => {
-        const r1 = board.getRegion(new Coordinates(0,0))
-        // const r2 = board.getRegion(new Coordinates(1,1))
-        // const r3 = board.getRegion(new Coordinates(2,2))
+        const r1 = board.getRegion(new Coordinates(0,0)).map(a => a.coords.serialize()).sort()
+        const r2 = board.getRegion(new Coordinates(1,1)).map(a => a.coords.serialize()).sort()
+        const r3 = board.getRegion(new Coordinates(2,2)).map(a => a.coords.serialize()).sort()
 
-        // console.log({r1,r2,r3})
-        console.log(JSON.stringify(r1, null, 2))
+        assert.deepEqual(r1, [ '(0/0)', '(1/0)' ])
+        assert.deepEqual(r2, [ '(0/1)', '(1/1)', '(2/0)' ])
+        assert.deepEqual(r3, [ '(0/2)', '(1/2)', '(2/1)', '(2/2)' ])
     })
 })
