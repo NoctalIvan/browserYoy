@@ -1,8 +1,8 @@
 import { ItemType } from "../enums/itemType";
+import { Coordinates } from "./Coordinates";
 
 export interface Item {
     type: ItemType
     level: number
-    x: number,
-    y: number
+    coords: Coordinates
 }

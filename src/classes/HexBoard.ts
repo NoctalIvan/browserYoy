@@ -6,8 +6,12 @@ export class HexBoard {
     tiles: HexTile[][]
     items: Item[]
 
+    getTile(coords:Coordinates):HexTile {
+        return this.tiles[coords.y] && this.tiles[coords.y][coords.x]
+    }
+
     getRegion(coords:Coordinates):HexTile[] {
-        const tile = this.tiles[coords.x][coords.y]
+        const tile = this.getTile(coords)
         
         const region = []
         const processed = new Set()
@@ -22,7 +26,7 @@ export class HexBoard {
             region.push(processTile)
 
             processTile.getNear()
-                .map(coords => this.tiles[coords.y] && this.tiles[coords.y][coords.x])
+                .map(coords => this.getTile(coords))
                 .filter(newTile => newTile && newTile.color == tile.color)
                 .forEach(newTile => {
                     toProcess.push(newTile)
@@ -30,5 +34,20 @@ export class HexBoard {
         }
 
         return region
+    }
+
+    canPlaceItem(color:number, coords:Coordinates) {
+        // check tile & tile color
+        const tile = this.getTile(coords)
+        if(!tile || tile.color != color) {
+            return false
+        }
+
+        // check other units
+        if(this.items.some(item => item.coords.equals(coords))) {
+            return false
+        }
+
+        return true
     }
 }

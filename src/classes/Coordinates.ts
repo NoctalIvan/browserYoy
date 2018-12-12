@@ -21,4 +21,8 @@ export class Coordinates {
     serialize():string {
         return `(${this.x}/${this.y})`
     }
+
+    equals(other:Coordinates) {
+        return this.x == other.x && this.y == other.y
+    }
 }
